@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel=“stylesheet” href="./style.css">
+    <link rel="stylesheet" href="float-style.css">
+    <link rel=“stylesheet” href=“https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    </script>
+    <title>Weather App</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+
+            <h1>Welcome to the Weather App</h1>
+            <div class="col-lg-2"></div>
+            <form>
+                <h2>Search for City:</h2>
+                <ul id="searched-cities">
+                    <li id="0">London<button>Weather Info:</button></li>
+                </ul>
+                <input placeholder="city" id="city" />
+                <button id="add-btn">Search</button>
+            </form>
+            <div id="modal-container" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                      <span class="close">&times;</span>
+                      <h2 id="modal-name">
+                      </h2>
+                    </div>
+                    <div class="modal-body">
+                      <h3>
+                        Weather Info:
+                      </h3>
+                      <textarea id="weather-info" cols="30" rows="10"></textarea>
+                      <div>
+                        <button id="save">Save</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        
+        <div class="col-lg-10">
+            
+            <div class="middle">
+                <img src="" alt="icon" id="icon">
+                <div class="degrees">
+                    <h1 id="temp">19</h1>
+                    <span>&#176;</span>
+                </div>
+                <h3 id="desc">Sunny</h3>
+            </div>
+            
+            <table class="table">
+                <thead>
+                    <tr>
+                        <!-- The scope attribute specifies that this is a header for a column -->
+                        <th scope="col">Temperature</th>
+                        <th scope="col">Humidity</th>
+                        <th scope="col">Wind Speed</th>
+                        <th scope="col">UV index</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>""</td>
+                        <td>""</td>
+                        <td>""</td>
+                        <td>""</td>
+
+                    </tr>
+                    <!-- Insert additional movie rows here -->
+                </tbody>
+            </table>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            // The createRow function takes data returned by OMDB and appends the table data to the tbody
+            var createRow = function (data) {
+                // Create a new table row element
+                var tRow = $("<tr>");
+
+                // Methods run on jQuery selectors return the selector they we run on
+                // This is why we can create and save a reference to a td in the same statement we update its text
+                var tempTd = $("<td>").text(data.Temperature);
+                var humTd = $("<td>").text(data.Humidity);
+                var wspTd = $("<td>").text(data.Wind);
+                var uvTd = $("<td>").text(data.UV);
+
+
+                // Append the newly created table data to the table row
+                tRow.append(tempTd, humTd, wspTd, uvTd);
+                // Append the table row to the table body
+                $("tbody").append(tRow);
+            };
+
+            
+
+
+<script src = "./script.js"></script>
+</body>
+
+</html>

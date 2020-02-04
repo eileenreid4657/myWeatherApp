@@ -15,55 +15,46 @@ function addCityToList(event) {
     var city = cityEl.value;
     var li = document.createElement("li");
     li.id = cityListEl.length;
-    li.innerHTML = city + " <button>Weather Info:</button>";
+    li.innerHTML = city;
     cityListEl.push({city: city});
     searchedCitiesEl.append(li);
 }
 
-function close() {
-  modalEl.style.display = "none";
-}
+var APIkey = "67552ce831bab1edacf38a97c7ac6639"
+    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=" + APIkey;
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+      })
+    .then(function(response){
+        
+        var weather = response.weather;
+        var main = response.main;
+        var wspd = response.wind.speed;
 
-function handleClick(event) {
-  if (event.target.matches("button")) {
-    event.preventDefault();
-    modalEl.style.display = "block";
-    currentId = parseInt(event.target.parentElement.id);
-    var city = cityListEl[currentId].city;
-    var weatherInfo = cityList[currentId].weatherInfo;
-    modalCityEl.textContent = city;
-    if(weatherInfo) {
-      weatherInfoEl.value  = weatherInfo;
-    } else {
-      weatherInfoEl.value = "";
-    }
-  }
-}
+        console.log(weather);
+        console.log(main);
+        console.log(wspd);
+        
+        });
 
-closeEl.addEventListener("click", close);
-saveBtn.addEventListener("click", function(event) {
-  event.preventDefault();
-  people[currentId].description = descriptionEl.value;
-  close();
-});
+// var searchAPI = function(uVWeather) {
+//   var queryURL = 'api.openweathermap.org/data/2.5/forecast?q=' + city + "&appid =" + "67552ce831bab1edacf38a97c7ac6639";
+//   $.ajax({
+//     url: queryURL,
+//     method: "GET"
+//   }).then(function(uVWeather) {
+//     createRow(uVWeather);
+//   });
+// };
+// uVWeather();
 
-var searchOMDB = function(weather) {
-  var queryURL = 'https://fcc-weather-api.glitch.me/api/current?lat=53.7071&lon =-1.24';
-  $.ajax({
-    url: queryURL,
-    method: "GET"
-  }).then(function(response) {
-    createRow(response);
-  });
-};
-weather();
+// addBtn.addEventListener("click", addCityToList);
+// searchedCitiesEl.addEventListener("click", handleClick);
+// document.addEventListener("click", function(event) {
+//   if (event.target === modalEl) {
+//     close();
+//   }
+// });
 
-addBtn.addEventListener("click", addCityToList);
-searchedCitiesEl.addEventListener("click", handleClick);
-document.addEventListener("click", function(event) {
-  if (event.target === modalEl) {
-    close();
-  }
-});
-addCityToList();
 
