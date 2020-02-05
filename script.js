@@ -7,36 +7,160 @@ var weatherInfoEl = document.querySelector("#weather-info");
 var closeEl = document.querySelector(".close");
 var saveBtn = document.querySelector("#save");
 
-var cityListEl = [{city: "city"}];
+var cityListEl = [];
 var currentid = 0;
+var city = "";
 
 function addCityToList(event) {
-    event.preventDefault();
-    var city = cityEl.value;
-    var li = document.createElement("li");
-    li.id = cityListEl.length;
-    li.innerHTML = city;
-    cityListEl.push({city: city});
-    searchedCitiesEl.append(li);
+  event.preventDefault();
+  city = cityEl.value;
+  console.log("City: "+city);
+  var li = document.createElement("li");
+  li.id = cityListEl.length;
+  li.innerHTML = city;
+  cityListEl.push(city);
+  console.log("City Array: "+cityListEl);
+  searchedCitiesEl.append(li);
+
+  // var icons = [];
+  //   for(var i=0; i < fiveDayArray.length; i++) {
+  //       var icon = fiveDayArray[i].weather[0].icon;
+  //       console.log(icon);     
+
+  //   }
+    
+  // var qImg = "http://openweathermap.org/img/wn/" + icons[0] + "@2x.png";
+  // $('#day1').append(`<img src=${qImg} alt="day 1">`);
+
+  // var qImg = "http://openweathermap.org/img/wn/" + icons[1] + "@2x.png";
+  // $('#day2').append(`<img src=${qImg} alt="day 2">`);
+
+  // var qImg = "http://openweathermap.org/img/wn/" + icons[2] + "@2x.png";
+  // $('#day3').append(`<img src=${qImg} alt="day 3">`);
+
+  // var qImg = "http://openweathermap.org/img/wn/" + icons[3] + "@2x.png";
+  // $('#day4').append(`<img src=${qImg} alt="day 4">`);
+
+  // var qImg = "http://openweathermap.org/img/wn/" + icons[4] + "@2x.png";
+  // $('#day5').append(`<img src=${qImg} alt="day 5">`);
+
 }
 
-var APIkey = "67552ce831bab1edacf38a97c7ac6639"
-    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=" + APIkey;
-    $.ajax({
-        url: queryURL,
-        method: "GET"
-      })
-    .then(function(response){
-        
-        var weather = response.weather;
-        var main = response.main;
-        var wspd = response.wind.speed;
+// var APIkey = "67552ce831bab1edacf38a97c7ac6639"
+// var queryURL = "https://api.openweathermap.org/data/2.5/weather?q="+ city +"&appid=67552ce831bab1edacf38a97c7ac6639&units=imperial";
 
-        console.log(weather);
-        console.log(main);
-        console.log(wspd);
-        
-        });
+
+var createRow = function (response) {
+  // Create a new table row element
+  var tRow = $("<tr>");
+
+  // Methods run on jQuery selectors return the selector they we run on
+  // This is why we can create and save a reference to a td in the same statement we update its text
+  var tempTd = $("<td>").text(response.main.temp);
+  var humTd = $("<td>").text(response.main.humidity);
+  var wspTd = $("<td>").text(response.wind.speed);
+  // var uvTd = $("<td>").text(response.UV);
+
+
+  // Append the newly created table data to the table row
+  $(".weather-data").append(tempTd, humTd, wspTd);
+  $("#temp").text(response.main.temp + `°`);
+  console.log(response)
+  $("#desc").text(response.weather[0].description)
+  console.log(response)
+  searchFiveDay();
+  // Append the table row to the table body
+  // $(".weather-data").append(tRow);
+  // $(".weather-data").append(tempTd);
+  // $(".weather-data").append(humTd);
+  // document.getElementsByClassName(".weather-data")
+};
+
+
+  var searchFiveDay = function () {
+  var queryURL = 'https://api.openweathermap.org/data/2.5/forecast?q=' + city + "," + "US&appid=67552ce831bab1edacf38a97c7ac6639";
+  console.log("Query URL: "+queryURL);
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  }).then(function (fiveDayWeather) {
+    
+
+    console.log("Five days: "+JSON.stringify(fiveDayWeather));
+
+    var fiveDays = fiveDayWeather.list;
+    var icons = [];
+    for(var i=0; i < 5; i++) {
+        var icon = fiveDayWeather.list[i].weather[0].icon;
+        console.log("icon src: "+icon);
+        var qImg = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+        $("#img"+i).attr("src",qImg);
+       // icons.push(icon);
+    }
+    
+  // var qImg = "http://openweathermap.org/img/wn/" + icons[0] + "@2x.png";
+  // $('#day1').append(`<img src=${qImg} alt="day 1">`);
+
+  // var qImg = "http://openweathermap.org/img/wn/" + icons[1] + "@2x.png";
+  // $('#day2').append(`<img src=${qImg} alt="day 2">`);
+
+  // var qImg = "http://openweathermap.org/img/wn/" + icons[2] + "@2x.png";
+  // $('#day3').append(`<img src=${qImg} alt="day 3">`);
+
+  // var qImg = "http://openweathermap.org/img/wn/" + icons[3] + "@2x.png";
+  // $('#day4').append(`<img src=${qImg} alt="day 4">`);
+
+  // var qImg = "http://openweathermap.org/img/wn/" + icons[4] + "@2x.png";
+  // $('#day5').append(`<img src=${qImg} alt="day 5">`);
+
+    var fiveDayArray = fiveDays.filter(function(weatherObj) {
+      if (weatherObj.dt_txt.includes('06:00:00')) {
+        return true
+      } else {
+        return false
+      }
+    })
+
+    console.log(fiveDayArray)
+
+    
+    
+  });
+};
+
+
+
+
+function weather() {
+  var queryURL = "https://api.openweathermap.org/data/2.5/weather?q="+ city +"&appid=67552ce831bab1edacf38a97c7ac6639&units=imperial";
+  $.ajax({
+      url: queryURL,
+      method: "GET"
+    })
+    .then(function (response) {
+
+      var curricon = response.weather[0].icon
+      var weather = response.weather;
+      var main = response.main;
+      var wspd = response.wind.speed;
+
+      console.log(response);
+
+      var qImg = "http://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png";
+      $("#icon").attr("src",qImg);
+
+
+
+      console.log(icon);
+      console.log(weather);
+      console.log(main);
+      console.log(wspd);
+      createRow(response);
+      searchFiveDay();
+     
+    });
+}
+weather();
 
 // var searchAPI = function(uVWeather) {
 //   var queryURL = 'api.openweathermap.org/data/2.5/forecast?q=' + city + "&appid =" + "67552ce831bab1edacf38a97c7ac6639";
@@ -49,12 +173,11 @@ var APIkey = "67552ce831bab1edacf38a97c7ac6639"
 // };
 // uVWeather();
 
-// addBtn.addEventListener("click", addCityToList);
+addBtn.addEventListener("click", addCityToList);
+addBtn.addEventListener("click", weather);
 // searchedCitiesEl.addEventListener("click", handleClick);
-// document.addEventListener("click", function(event) {
-//   if (event.target === modalEl) {
-//     close();
-//   }
-// });
-
-
+document.addEventListener("click", function (event) {
+  if (event.target === modalEl) {
+    close();
+  }
+});

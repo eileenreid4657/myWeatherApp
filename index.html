@@ -8,120 +8,120 @@
 
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <title>Weather App</title>
 </head>
 
 <body>
-    <div class="container">
-        <h1>Welcome to the Weather App</h1>
-        <div class="row">
+    <!-- <div class="container"> -->
+    <h1>Welcome to the Weather App</h1>
+    <div class="row">
 
 
-            <div class="col-md-3">
-                <form>
-                    <h3>Search for City:</h3>
-                    <ul id="searched-cities">
-                        <li id="0">London</li>
-                    </ul>
-                    <input placeholder="city" id="city" />
-                    <button id="add-btn">Search</button>
-                </form>
-
-            </div>
-
-
-            <div class="row">
-                <div class="col-md-9">
-
-                    <div class="middle">
-                        <img src="" alt="icon" id="icon">
-                        <div class="degrees">
-                            <h2 id="temp">19</h2>
-                            <span>&#176;</span>
-                        </div>
-                        <h3 id="desc">Sunny</h3>
-                    </div>
-                </div>
-
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <!-- The scope attribute specifies that this is a header for a column -->
-                            <th scope="col">Temperature</th>
-                            <th scope="col">Humidity</th>
-                            <th scope="col">Wind Speed</th>
-                            <!-- <th scope="col">UV index</th> -->
-                        </tr>
-                        <tr class="weather-data">
-
-                        </tr>
-                    </thead>
-                    <tbody>
-
-
-                    </tbody>
-                </table>
-
-
-
-                <div class="fiveDay">
-                    <h5>Five Day Forcast</h5>
-                    <div class="row">
-
-                        <div class="col-sm-2">Day1</div>
-                        <div class="col-sm-2">Day2</div>
-                        <div class="col-sm-2">Day3</div>
-                        <div class="col-sm-2">Day4</div>
-                        <div class="col-sm-2">Day5</div>
-                    </div>
-                </div>
-
-            </div>
+        <div class="offset-md-1 col-md-3">
+            <form>
+                <h3>Search for City:</h3>
+                <ul id="searched-cities">
+                    <li id="0">London</li>
+                </ul>
+                <input placeholder="city" id="city" />
+                <button id="add-btn">Search</button>
+            </form>
 
         </div>
 
-        <script type="text/javascript">
-            var APIkey = "67552ce831bab1edacf38a97c7ac6639"
-            var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=" + APIkey;
-            var createRow = function (response) {
-                // Create a new table row element
-                var tRow = $("<tr>");
 
-                // Methods run on jQuery selectors return the selector they we run on
-                // This is why we can create and save a reference to a td in the same statement we update its text
-                var tempTd = $("<td>").text(response.main.temp);
-                var humTd = $("<td>").text(response.main.Humidity);
-                var wspTd = $("<td>").text(response.wind.speed);
-                // var uvTd = $("<td>").text(response.UV);
+        <!-- <div class="row"> -->
+        <div class="col-md-7">
 
+            <div class="middle">
+                <img src="" alt="icon" id="icon">
+                <div class="degrees">
+                    <h2 id="temp"></h2>
 
-                // Append the newly created table data to the table row
-                tRow.append(tempTd, humTd, wspTd, uvTd);
-                // Append the table row to the table body
-                $("tbody").append(tRow);
-            };
-
-            
-            var searchAPI = function (fiveDayWeather) {
-                var queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + "," + "US" +
-                    "&appid=" + "67552ce831bab1edacf38a97c7ac6639";
-                $.ajax({
-                    url: queryURL,
-                    method: "GET"
-                }).then(function (fiveDayWeather) {
-                    createRow(fiveDayWeather);
-                });
-            };
-        </script>
+                </div>
+                <h3 id="desc"></h3>
+            </div>
 
 
+            <table class="table">
+                <thead>
+                    <tr>
+                        <!-- The scope attribute specifies that this is a header for a column -->
+                        <th scope="col">Temperature</th>
+                        <th scope="col">Humidity</th>
+                        <th scope="col">Wind Speed</th>
+                        <!-- <th scope="col">UV index</th> -->
+                    </tr>
+                    <tr class="weather-data">
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+            <div class="fiveDay">
+                <div class="row">
+                    <div class="col-md-12">
+                <h5 class="text-center">Five Day Forcast</h5>
+                </div>
+            </div>
+            <!-- <div class="col-md-12"> -->
+                <div class="row">
+                    <!-- </div> -->
+                    <div class="offset-md-1 col-sm-2">
+                        <div id="day1">Tomorrow<img src="" alt="" id="img0"></div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div id="day2">Next Day<img src="" alt="" id="img1"></div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div id="day3">Day After<img src="" alt="" id="img2"></div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div id="day4">Day After<img src="" alt="" id="img3"></div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div id="day5">Day After<img src="" alt="" id="img4"></div>
+                    </div>
+                <!-- </div> -->
+            </div>
+        </div>
+
+    </div>
+    
+
+    <!-- </div> -->
+
+    <script type="text/javascript">
+        var APIkey = "67552ce831bab1edacf38a97c7ac6639"
+        var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "," + "uk" + "&appid=" + APIkey;
+        var createRow = function (response) {
+            // Create a new table row element
+            var tRow = $("<tr>");
+
+            // Methods run on jQuery selectors return the selector they we run on
+            // This is why we can create and save a reference to a td in the same statement we update its text
+            var tempTd = $("<td>").text(response.main.temp);
+            var humTd = $("<td>").text(response.main.Humidity);
+            var wspTd = $("<td>").text(response.wind.speed);
+            // var uvTd = $("<td>").text(response.UV);
+
+
+            // Append the newly created table data to the table row
+            tRow.append(tempTd, humTd, wspTd, uvTd);
+            // Append the table row to the table body
+            $("tbody").append(tRow);
+        };
+    </script>
 
 
 
 
-        <script src="./script.js"></script>
+
+
+    <script src="./script.js"></script>
 </body>
 
 </html>
