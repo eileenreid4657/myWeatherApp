@@ -143,14 +143,26 @@ function weather() {
       var weather = response.weather;
       var main = response.main;
       var wspd = response.wind.speed;
-
+      var lat = response.coord.lat;
+      var lon = response.coord.lon;
       console.log(response);
 
       var qImg = "http://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png";
       $("#icon").attr("src",qImg);
 
+      var uVWeather = function() {
+          var queryURL = 'http://api.openweathermap.org/data/2.5/uvi?appid=67552ce831bab1edacf38a97c7ac6639&lat=' + lat + '&lon=' + lon;
+          $.ajax({
+            url: queryURL,
+            method: "GET"
+          }).then(function(uVWeather) {
+            createRow(uVWeather);
+          });
+        };
+        uVWeather();
 
-
+      console.log(lat);
+      console.log(lon);
       console.log(icon);
       console.log(weather);
       console.log(main);
@@ -162,16 +174,7 @@ function weather() {
 }
 weather();
 
-// var searchAPI = function(uVWeather) {
-//   var queryURL = 'api.openweathermap.org/data/2.5/forecast?q=' + city + "&appid =" + "67552ce831bab1edacf38a97c7ac6639";
-//   $.ajax({
-//     url: queryURL,
-//     method: "GET"
-//   }).then(function(uVWeather) {
-//     createRow(uVWeather);
-//   });
-// };
-// uVWeather();
+
 
 addBtn.addEventListener("click", addCityToList);
 addBtn.addEventListener("click", weather);
