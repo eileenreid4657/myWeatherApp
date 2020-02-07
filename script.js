@@ -22,33 +22,8 @@ function addCityToList(event) {
   console.log("City Array: " + cityListEl);
   searchedCitiesEl.append(li);
 
-  // var icons = [];
-  //   for(var i=0; i < fiveDayArray.length; i++) {
-  //       var icon = fiveDayArray[i].weather[0].icon;
-  //       console.log(icon);     
-
-  //   }
-
-  // var qImg = "http://openweathermap.org/img/wn/" + icons[0] + "@2x.png";
-  // $('#day1').append(`<img src=${qImg} alt="day 1">`);
-
-  // var qImg = "http://openweathermap.org/img/wn/" + icons[1] + "@2x.png";
-  // $('#day2').append(`<img src=${qImg} alt="day 2">`);
-
-  // var qImg = "http://openweathermap.org/img/wn/" + icons[2] + "@2x.png";
-  // $('#day3').append(`<img src=${qImg} alt="day 3">`);
-
-  // var qImg = "http://openweathermap.org/img/wn/" + icons[3] + "@2x.png";
-  // $('#day4').append(`<img src=${qImg} alt="day 4">`);
-
-  // var qImg = "http://openweathermap.org/img/wn/" + icons[4] + "@2x.png";
-  // $('#day5').append(`<img src=${qImg} alt="day 5">`);
 
 }
-
-// var APIkey = "67552ce831bab1edacf38a97c7ac6639"
-// var queryURL = "https://api.openweathermap.org/data/2.5/weather?q="+ city +"&appid=67552ce831bab1edacf38a97c7ac6639&units=imperial";
-
 
 var createRow = function (response) {
   // Create a new table row element
@@ -63,6 +38,7 @@ var createRow = function (response) {
 
 
   // Append the newly created table data to the table row
+  $(".weather-data").empty();
   $(".weather-data").append(tempTd, humTd, wspTd);
   $("#temp").text(response.main.temp + `°`);
   console.log(response)
@@ -100,20 +76,7 @@ var searchFiveDay = function () {
       // icons.push(icon);
     }
 
-    // var qImg = "http://openweathermap.org/img/wn/" + icons[0] + "@2x.png";
-    // $('#day1').append(`<img src=${qImg} alt="day 1">`);
-
-    // var qImg = "http://openweathermap.org/img/wn/" + icons[1] + "@2x.png";
-    // $('#day2').append(`<img src=${qImg} alt="day 2">`);
-
-    // var qImg = "http://openweathermap.org/img/wn/" + icons[2] + "@2x.png";
-    // $('#day3').append(`<img src=${qImg} alt="day 3">`);
-
-    // var qImg = "http://openweathermap.org/img/wn/" + icons[3] + "@2x.png";
-    // $('#day4').append(`<img src=${qImg} alt="day 4">`);
-
-    // var qImg = "http://openweathermap.org/img/wn/" + icons[4] + "@2x.png";
-    // $('#day5').append(`<img src=${qImg} alt="day 5">`);
+  
 
     var fiveDayArray = fiveDays.filter(function (weatherObj) {
       if (weatherObj.dt_txt.includes('06:00:00')) {
