@@ -73,7 +73,7 @@ var searchFiveDay = function () {
       console.log("icon src: " + icon);
       var qImg = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
       $("#img" + i).attr("src", qImg);
-      // icons.push(icon);
+      
     }
 
   
@@ -86,7 +86,6 @@ var searchFiveDay = function () {
       }
     })
 
-    // console.log(fiveDayArray)
   });
 };
 
@@ -143,7 +142,6 @@ weather();
 
 addBtn.addEventListener("click", addCityToList);
 addBtn.addEventListener("click", weather);
-// searchedCitiesEl.addEventListener("click", handleClick);
 document.addEventListener("click", function (event) {
   if (event.target === modalEl) {
     close();
