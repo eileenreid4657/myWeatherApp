@@ -14,12 +14,12 @@ var city = "";
 function addCityToList(event) {
   event.preventDefault();
   city = cityEl.value;
-  console.log("City: "+city);
+  console.log("City: " + city);
   var li = document.createElement("li");
   li.id = cityListEl.length;
   li.innerHTML = city;
   cityListEl.push(city);
-  console.log("City Array: "+cityListEl);
+  console.log("City Array: " + cityListEl);
   searchedCitiesEl.append(li);
 
   // var icons = [];
@@ -28,7 +28,7 @@ function addCityToList(event) {
   //       console.log(icon);     
 
   //   }
-    
+
   // var qImg = "http://openweathermap.org/img/wn/" + icons[0] + "@2x.png";
   // $('#day1').append(`<img src=${qImg} alt="day 1">`);
 
@@ -59,7 +59,7 @@ var createRow = function (response) {
   var tempTd = $("<td>").text(response.main.temp);
   var humTd = $("<td>").text(response.main.humidity);
   var wspTd = $("<td>").text(response.wind.speed);
-  // var uvTd = $("<td>").text(response.UV);
+  // var uvTd = $("<td>").text(response.value);
 
 
   // Append the newly created table data to the table row
@@ -76,44 +76,46 @@ var createRow = function (response) {
   // document.getElementsByClassName(".weather-data")
 };
 
+function createUvRow(uVData) {
+  $(".weather-data").append(uVData)
+}
 
-  var searchFiveDay = function () {
+
+var searchFiveDay = function () {
   var queryURL = 'https://api.openweathermap.org/data/2.5/forecast?q=' + city + "," + "US&appid=67552ce831bab1edacf38a97c7ac6639";
-  console.log("Query URL: "+queryURL);
+  console.log("Query URL: " + queryURL);
   $.ajax({
     url: queryURL,
     method: "GET"
   }).then(function (fiveDayWeather) {
-    
-
-    console.log("Five days: "+JSON.stringify(fiveDayWeather));
+    // console.log("Five days: "+JSON.stringify(fiveDayWeather));
 
     var fiveDays = fiveDayWeather.list;
     var icons = [];
-    for(var i=0; i < 5; i++) {
-        var icon = fiveDayWeather.list[i].weather[0].icon;
-        console.log("icon src: "+icon);
-        var qImg = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
-        $("#img"+i).attr("src",qImg);
-       // icons.push(icon);
+    for (var i = 0; i < 5; i++) {
+      var icon = fiveDayWeather.list[i].weather[0].icon;
+      console.log("icon src: " + icon);
+      var qImg = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+      $("#img" + i).attr("src", qImg);
+      // icons.push(icon);
     }
-    
-  // var qImg = "http://openweathermap.org/img/wn/" + icons[0] + "@2x.png";
-  // $('#day1').append(`<img src=${qImg} alt="day 1">`);
 
-  // var qImg = "http://openweathermap.org/img/wn/" + icons[1] + "@2x.png";
-  // $('#day2').append(`<img src=${qImg} alt="day 2">`);
+    // var qImg = "http://openweathermap.org/img/wn/" + icons[0] + "@2x.png";
+    // $('#day1').append(`<img src=${qImg} alt="day 1">`);
 
-  // var qImg = "http://openweathermap.org/img/wn/" + icons[2] + "@2x.png";
-  // $('#day3').append(`<img src=${qImg} alt="day 3">`);
+    // var qImg = "http://openweathermap.org/img/wn/" + icons[1] + "@2x.png";
+    // $('#day2').append(`<img src=${qImg} alt="day 2">`);
 
-  // var qImg = "http://openweathermap.org/img/wn/" + icons[3] + "@2x.png";
-  // $('#day4').append(`<img src=${qImg} alt="day 4">`);
+    // var qImg = "http://openweathermap.org/img/wn/" + icons[2] + "@2x.png";
+    // $('#day3').append(`<img src=${qImg} alt="day 3">`);
 
-  // var qImg = "http://openweathermap.org/img/wn/" + icons[4] + "@2x.png";
-  // $('#day5').append(`<img src=${qImg} alt="day 5">`);
+    // var qImg = "http://openweathermap.org/img/wn/" + icons[3] + "@2x.png";
+    // $('#day4').append(`<img src=${qImg} alt="day 4">`);
 
-    var fiveDayArray = fiveDays.filter(function(weatherObj) {
+    // var qImg = "http://openweathermap.org/img/wn/" + icons[4] + "@2x.png";
+    // $('#day5').append(`<img src=${qImg} alt="day 5">`);
+
+    var fiveDayArray = fiveDays.filter(function (weatherObj) {
       if (weatherObj.dt_txt.includes('06:00:00')) {
         return true
       } else {
@@ -121,18 +123,12 @@ var createRow = function (response) {
       }
     })
 
-    console.log(fiveDayArray)
-
-    
-    
+    // console.log(fiveDayArray)
   });
 };
 
-
-
-
 function weather() {
-  var queryURL = "https://api.openweathermap.org/data/2.5/weather?q="+ city +"&appid=67552ce831bab1edacf38a97c7ac6639&units=imperial";
+  var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=67552ce831bab1edacf38a97c7ac6639&units=imperial";
   $.ajax({
       url: queryURL,
       method: "GET"
@@ -145,31 +141,37 @@ function weather() {
       var wspd = response.wind.speed;
       var lat = response.coord.lat;
       var lon = response.coord.lon;
-      console.log(response);
+
+
+      // console.log(uv);
 
       var qImg = "http://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png";
-      $("#icon").attr("src",qImg);
-
-      var uVWeather = function() {
-          var queryURL = 'http://api.openweathermap.org/data/2.5/uvi?appid=67552ce831bab1edacf38a97c7ac6639&lat=' + lat + '&lon=' + lon;
-          $.ajax({
-            url: queryURL,
-            method: "GET"
-          }).then(function(uVWeather) {
-            createRow(uVWeather);
-          });
-        };
-        uVWeather();
-
-      console.log(lat);
-      console.log(lon);
-      console.log(icon);
-      console.log(weather);
-      console.log(main);
-      console.log(wspd);
+      $("#icon").attr("src", qImg);
       createRow(response);
+
+      var uVWeather = function () {
+        var queryURL = 'http://api.openweathermap.org/data/2.5/uvi?appid=67552ce831bab1edacf38a97c7ac6639&lat=' + lat + '&lon=' + lon;
+        $.ajax({
+          url: queryURL,
+          method: "GET"
+        }).then(function (uvresponse) {
+          var uv = uvresponse.value;
+          console.log("UV Index:" + uv);
+          // createRow(response);
+          createUvRow(uv)
+        });
+      };
+      uVWeather();
+
+      // console.log(lat);
+      // console.log(lon);
+      // console.log(icon);
+      // console.log(weather);
+      // console.log(main);
+      // console.log(wspd);
+      // createRow(response);
       searchFiveDay();
-     
+
     });
 }
 weather();
