@@ -71,7 +71,7 @@ var searchFiveDay = function () {
     for (var i = 0; i < 5; i++) {
       var icon = fiveDayWeather.list[i].weather[0].icon;
       console.log("icon src: " + icon);
-      var qImg = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+      var qImg = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
       $("#img" + i).attr("src", qImg);
       
     }
@@ -107,12 +107,12 @@ function weather() {
 
       // console.log(uv);
 
-      var qImg = "http://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png";
+      var qImg = "https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png";
       $("#icon").attr("src", qImg);
       createRow(response);
 
       var uVWeather = function () {
-        var queryURL = 'http://api.openweathermap.org/data/2.5/uvi?appid=67552ce831bab1edacf38a97c7ac6639&lat=' + lat + '&lon=' + lon;
+        var queryURL = 'https://api.openweathermap.org/data/2.5/uvi?appid=67552ce831bab1edacf38a97c7ac6639&lat=' + lat + '&lon=' + lon;
         $.ajax({
           url: queryURL,
           method: "GET"
