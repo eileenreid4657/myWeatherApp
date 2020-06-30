@@ -36,9 +36,9 @@ span {
 
 }
 
-.fiveDay {
-    background-color: azure;
-}
+/* .col-md-12 { */
+    /* background-color: azure; */
+/* } */
 
 /* .col-md-2 {
      
@@ -68,10 +68,10 @@ span {
  
 
   .col-sm-2 {
-      position: relative;
+      position: static;
       background-color: aquamarine;
-      width: 80px;
-      height: 80px;
+      width: 500px;
+      height: 100px;
       border: 1px solid black;
   } 
    
